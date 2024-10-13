@@ -1,0 +1,6 @@
+[submodule "extern/simdjson"]
+	path = extern/simdjson
+	url = https://github.com/simdjson/simdjson.git
+[submodule "extern/CSharp.lua"]
+	path = extern/CSharp.lua
+	url = https://github.com/yanghuan/CSharp.lua.git

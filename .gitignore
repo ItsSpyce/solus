@@ -1,0 +1,6 @@
+.vscode/
+.vs/
+.xmake/
+build/
+.build/
+vcpkg_installed/
