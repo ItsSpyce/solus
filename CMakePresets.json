@@ -13,7 +13,7 @@
         "CMAKE_CXX_FLAGS": "$env{COMMONLIBSSE_COMPILER} $env{COMMONLIBSSE_PLATFORM} $env{COMMONLIBSSE_TEXT}",
         "SOLUS_COMPILE_YUE": false,
         "SOLUS_COMPILE_TEAL": false,
-        "SOLUS_COMPILE_CS": true
+        "SOLUS_COMPILE_CS": false
       }
     },
     {

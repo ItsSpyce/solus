@@ -1,16 +1,15 @@
 cmake_minimum_required(VERSION 3.21)
 
 project(solus VERSION 1.0.0 LANGUAGES CXX)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}\\cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(GNUInstallDirs)
 include(IncludedScripts)
 
-include_directories(${CMAKE_SOURCE_DIR}\\include)
+include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/extern/boolinq/include)
 
-set(sources ${SOURCES}
-  src/solus.cpp
-  src/engine.cpp)
+set(sources ${SOURCES} src/plugin.cpp)
 
 find_package(CommonLibSSE CONFIG REQUIRED)
 add_commonlibsse_plugin(
@@ -19,23 +18,22 @@ add_commonlibsse_plugin(
   USE_ADDRESS_LIBRARY
   USE_SIGNATURE_SCANNING)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
-target_precompile_headers(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}\\include\\PCH.h)
+target_precompile_headers(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include/PCH.h)
 
 find_package(lua CONFIG REQUIRED)
 find_package(sol2 CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 add_subdirectory(extern/simdjson EXCLUDE_FROM_ALL)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE simdjson lua sol2)
 
 # TODO: add hashing of all files in lib/*.lua and add them to the target via a header file
 # TODO: I'd like to compile .yue files into .lua files JIT but the CMakeLists file for yuescript is broken for import
 
-if (DEFINED ENV{SKYRIM_FOLDER} AND IS_DIRECTORY "$ENV{SKYRIM_FOLDER}\\Data")
-    set(OUTPUT_FOLDER "$ENV{SKYRIM_FOLDER}\\Data")
+if (DEFINED ENV{SKYRIM_FOLDER} AND IS_DIRECTORY "$ENV{SKYRIM_FOLDER}/Data")
+    set(OUTPUT_FOLDER "$ENV{SKYRIM_FOLDER}/Data")
 endif ()
 
 if (DEFINED ENV{SKYRIM_MODS_FOLDER} AND IS_DIRECTORY "$ENV{SKYRIM_MODS_FOLDER}")
-    set(OUTPUT_FOLDER "$ENV{SKYRIM_MODS_FOLDER}\\${PROJECT_NAME} ${CMAKE_BUILD_TYPE}")
+    set(OUTPUT_FOLDER "$ENV{SKYRIM_MODS_FOLDER}/${PROJECT_NAME} ${CMAKE_BUILD_TYPE}")
 endif ()
 
 if (DEFINED OUTPUT_FOLDER)
@@ -43,7 +41,7 @@ if (DEFINED OUTPUT_FOLDER)
     # then we'll copy your mod files into Skyrim or a mod manager for you!
 
     # Copy the SKSE plugin .dll files into the SKSE/Plugins/ folder
-    set(DLL_FOLDER "${OUTPUT_FOLDER}\\SKSE\\Plugins")
+    set(DLL_FOLDER "${OUTPUT_FOLDER}/SKSE/Plugins")
 
     message(STATUS "SKSE plugin output folder: ${DLL_FOLDER}")
 

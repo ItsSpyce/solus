@@ -1,27 +1,40 @@
 require "core"
 
-return namespace("solus", function ()
-  class("logger", function (logger)
-    local level = enum("level", function (level)
-      level.INFO = 1
-      level.WARN = 2
-      level.ERROR = 3
-      level.TRACE = 4
-      level.DEBUG = 5
-    end)
+local LogLevel = enum {
+  DEBUG = 0,
+  INFO = 1,
+  WARN = 2,
+  ERROR = 3,
+}
 
-    local log = function (level, msg, ...)
+local Logger = class {
+  constructor = function(self)
 
-    end
+  end,
 
-    logger.info = function (msg, ...) log(level.INFO, msg, ...) end
+  log = function(self, level, message)
 
-    logger.warn = function (msg, ...) log(level.WARN, msg, ...) end
+  end,
 
-    logger.error = function (msg, ...) log(level.ERROR, msg, ...) end
+  debug = function(self, message)
+    self:log(LogLevel.DEBUG, message)
+  end,
 
-    logger.trace = function (msg, ...) log(level.TRACE, msg, ...) end
+  info = function(self, message)
+    self:log(LogLevel.INFO, message)
+  end,
 
-    logger.debug = function (msg, ...) log(level.DEBUG, msg, ...) end
-  end)
-end)
+  warn = function(self, message)
+    self:log(LogLevel.WARN, message)
+  end,
+
+  error = function(self, message)
+    self:log(LogLevel.ERROR, message)
+  end,
+}
+
+return {
+  Logger,
+  LogLevel,
+  console = Logger.new(),
+}

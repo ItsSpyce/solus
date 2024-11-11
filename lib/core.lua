@@ -1,4 +1,5 @@
-require("core._core")
+require("core.mod")
 require("core.array")
 require("core.disposable")
 require("core.exception")
+require("core.promise")

@@ -1,16 +1,17 @@
 #include <cassert>
 
 #include "PCH.h"
+#include "solus.hpp"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/msvc_sink.h"
+#include "modules/solus_module.hpp"
+#include "modules/skse_module.hpp"
 
-#include "engine.h"
-namespace fs = std::filesystem;
-namespace stl = SKSE::stl;
+namespace modules = solus::modules;
 
-void InitializeLogging()
+void initialize_logging()
 {
-  auto path = logger::log_directory();
+  auto path = solus::solus_root_directory;
 
   if (!path)
   {
@@ -38,34 +39,16 @@ void InitializeLogging()
   logger::info("Logging initialized");
 }
 
-solus::SolusEngine *engine{};
-
-void HandleMessage(SKSE::MessagingInterface::Message *a_msg)
+void handle_message(SKSE::MessagingInterface::Message *msg)
 {
-  switch (a_msg->type)
+  switch (msg->type)
   {
-    case SKSE::MessagingInterface::kDataLoaded:
-      logger::info("Data loaded");
-      break;
-    case SKSE::MessagingInterface::kPreLoadGame:
-      logger::info("Pre-load-game");
-      break;
     case SKSE::MessagingInterface::kPostLoad:
-      logger::info("Post-load");
+      logger::info("Setting up core modules ===");
+      solus::import_module(modules::solus::solus_module);
+      solus::import_module(modules::skse::skse_module);
       break;
     case SKSE::MessagingInterface::kPostPostLoad:
-      logger::info("Post-post-load");
-      if (engine->CanCompileTestScript())
-      {
-        logger::info("Test script compiled successfully");
-      }
-      else
-      {
-        stl::report_and_fail("Test script failed to compile");
-      }
-      break;
-    case SKSE::MessagingInterface::kSaveGame:
-      logger::info("Save-game");
       break;
     default:
       break;
@@ -75,7 +58,9 @@ void HandleMessage(SKSE::MessagingInterface::Message *a_msg)
 SKSEPluginLoad(const SKSE::LoadInterface *a_skse)
 {
   SKSE::Init(a_skse);
-  InitializeLogging();
-  SKSE::GetMessagingInterface()->RegisterListener(HandleMessage);
+  initialize_logging();
+  SKSE::GetMessagingInterface()->RegisterListener(handle_message);
+  solus::initialize();
+  assert(solus::test_lua());
   return true;
 }

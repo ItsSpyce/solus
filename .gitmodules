@@ -4,3 +4,6 @@
 [submodule "extern/CSharp.lua"]
 	path = extern/CSharp.lua
 	url = https://github.com/yanghuan/CSharp.lua.git
+[submodule "extern/boolinq"]
+	path = extern/boolinq
+	url = https://github.com/k06a/boolinq.git
