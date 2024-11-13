@@ -20,13 +20,18 @@ add_commonlibsse_plugin(
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include/PCH.h)
 
-find_package(lua CONFIG REQUIRED)
+find_package(Lua CONFIG REQUIRED)
+target_include_directories(${PROJECT_NAME} PRIVATE ${LUA_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${LUA_LIBRARIES})
+
+add_compile_definitions(SOL_ALL_SAFETIES_ON=1)
+add_compile_definitions(SOLL_ENABLE_INTEROP=1)
+add_compile_definitions(SOL_USING_CXX_LUA=0)
+
 find_package(sol2 CONFIG REQUIRED)
-find_package(imgui CONFIG REQUIRED)
-add_subdirectory(extern/simdjson EXCLUDE_FROM_ALL)
+target_link_libraries(${PROJECT_NAME} PRIVATE sol2)
 
 # TODO: add hashing of all files in lib/*.lua and add them to the target via a header file
-# TODO: I'd like to compile .yue files into .lua files JIT but the CMakeLists file for yuescript is broken for import
 
 if (DEFINED ENV{SKYRIM_FOLDER} AND IS_DIRECTORY "$ENV{SKYRIM_FOLDER}/Data")
     set(OUTPUT_FOLDER "$ENV{SKYRIM_FOLDER}/Data")

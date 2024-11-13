@@ -1,7 +1,5 @@
 #pragma once
 
-#include <sol/sol.hpp>
-
 const char *GetLastPartOfDeclaration(const char *declaration)
 {
   const auto str = std::string(declaration);

@@ -7,3 +7,6 @@
 [submodule "extern/boolinq"]
 	path = extern/boolinq
 	url = https://github.com/k06a/boolinq.git
+[submodule "extern/skse-menu-framework-2"]
+	path = extern/skse-menu-framework-2
+	url = https://github.com/Thiago099/SKSE-Menu-Framework-2.git

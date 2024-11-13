@@ -2,5 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
   "name": "solus",
   "version-string": "1.0.0",
-  "dependencies": ["commonlibsse-ng", "lua", "sol2", "simdjson", "imgui"]
+  "dependencies": [
+    "commonlibsse-ng",
+    "lua",
+    "sol2",
+    "simpleini",
+    "spdlog"
+  ]
 }
