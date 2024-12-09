@@ -1,5 +1,5 @@
 require('tablext')
-require('meta')
+require('symbol')
 
 local getinfo = debug.getinfo
 
@@ -13,8 +13,8 @@ local function noop(...) return nil end
 
 local builtinproto = {
   constructor = noop,
-  [Meta.string] = function(self) return self.__name end,
-  [Meta.name] = 'Class-' .. string.format('%02x', getinfo(2, 'S').short_src:byte(1, 2)),
+  [Symbol.string] = function(self) return self.__name end,
+  [Symbol.name] = 'Class-' .. string.format('%02x', getinfo(2, 'S').short_src:byte(1, 2)),
   tostring = function(self) return tostring(self) end,
   equals = function(self, other) return self == other end,
 }
@@ -27,7 +27,7 @@ function class(proto)
   local metamethods = getmetatable(prototype) or {}
   if type(metamethods) == 'table' then
     for k, v in pairs(prototype) do
-      if type(k) == 'table' and Meta.isMeta(k) then
+      if type(k) == 'table' and Symbol.isMeta(k) then
         metamethods[k.__name] = v
       end
     end

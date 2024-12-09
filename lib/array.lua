@@ -33,7 +33,7 @@ Array = class {
     self.__length = #self.__table or 0
   end,
 
-  [Meta.index] = function(self, key)
+  [Symbol.index] = function(self, key)
     return match(type(key))(
       { 'number', function()
         return self.__table[key]
@@ -41,7 +41,7 @@ Array = class {
     )
   end,
 
-  [Meta.newindex] = function(self, key, value)
+  [Symbol.newindex] = function(self, key, value)
     if type(key) == 'number' then
       self.__table[key] = value
       if key > self.__length then
@@ -50,7 +50,7 @@ Array = class {
     end
   end,
 
-  [Meta.length] = function(self)
+  [Symbol.length] = function(self)
     return self.__length
   end,
 
