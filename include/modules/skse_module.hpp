@@ -51,4 +51,4 @@ EXPORT_MODULE(skse_messaging)
   EXPORT_FIELD(SKSE::MessagingInterface::kDataLoaded);
   EXPORT_FIELD(SKSE::MessagingInterface::kTotal);
 }
-} // namespace solus
+} // namespace solus::modules::skse

@@ -9,7 +9,20 @@ include(IncludedScripts)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/extern/boolinq/include)
 
-set(sources ${SOURCES} src/plugin.cpp)
+set(sources ${SOURCES}
+  src/plugin.cpp
+  src/logging.cpp
+  src/core.cpp
+  src/solus.cpp
+  src/lua_mod.cpp
+  src/lua_mod_manager.cpp
+  src/modules/imgui/imgui_module.cpp
+  src/modules/imgui/imgui_enums.cpp
+  src/modules/imgui/imgui_methods.cpp
+  src/modules/imgui/imgui_types.cpp
+  src/modules/imgui/imgui_managers.cpp
+  src/modules/imgui/SKSEMenuFramework.cpp
+  src/modules/solus_module.cpp)
 
 find_package(CommonLibSSE CONFIG REQUIRED)
 add_commonlibsse_plugin(
